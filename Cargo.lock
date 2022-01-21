@@ -6,6 +6,8 @@ version = 3
 name = "Price_Tracker"
 version = "0.1.0"
 dependencies = [
+ "serde",
+ "serde_json",
  "thirtyfour_sync",
 ]
 

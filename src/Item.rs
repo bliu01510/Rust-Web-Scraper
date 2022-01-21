@@ -2,6 +2,7 @@ use self::_InternalMethods::_InternalItemMethods;
 use crate::Price;
 use crate::Shop;
 use std::result;
+use serde::Serialize;
 use thirtyfour_sync;
 use thirtyfour_sync::Capabilities;
 use thirtyfour_sync::WebDriverCommands;
@@ -46,6 +47,7 @@ where
     }
 }
 
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct TestItem {
     shop_name: Shop::ShopNames,
     url_link: String,
@@ -105,11 +107,6 @@ impl TestItem {
             let item_description = element_node
                 .find_element(thirtyfour_sync::By::Css("p.description"))?
                 .text()?;
-            // let item_price = element_node
-            //     .find_element(thirtyfour_sync::By::Css("h4.pull-right.price"))?
-            //     .text()?[1..]
-            //     .parse::<f64>()
-            //     .unwrap();
             let item_price = Price::ItemPrice::USD(
                 element_node
                     .find_element(thirtyfour_sync::By::Css("h4.pull-right.price"))?
@@ -158,6 +155,7 @@ impl _InternalMethods::_InternalItemMethods for TestItem {
     }
 }
 
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct ChallengerItem {
     shop_name: Shop::ShopNames,
     url_link: String,
@@ -196,7 +194,7 @@ impl ChallengerItem {
         >,
     ) -> std::result::Result<Vec<ChallengerItem>, thirtyfour_sync::error::WebDriverError> {
         // Defining the collection used to collect the results
-        let result: Vec<ChallengerItem> = Vec::new();
+        let mut result: Vec<ChallengerItem> = Vec::new();
 
         // Loading the corresponding webpage on the headless chrome service
         let url_link: &'static str = "https://www.challenger.sg/apple/iphone-m";
@@ -269,7 +267,18 @@ impl ChallengerItem {
                 Err(e) => false,
             };
 
-            println!("{}: {}", item_name, item_price);
+            // Constructing the item
+            let item = ChallengerItem::new(
+                shop_name,
+                url_link,
+                item_name,
+                Price::ItemPrice::SGD(item_price),
+                item_description,
+                is_sold_out,
+            );
+
+            // Appending to the result vector
+            result.push(item);
         }
 
         Ok(result)
