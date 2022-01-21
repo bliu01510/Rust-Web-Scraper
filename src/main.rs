@@ -31,34 +31,3 @@ fn main() {
     // Performing the shutdown of the browser window
     driver.quit().unwrap();
 }
-
-// fn test_scraping_func() -> wbd::WebDriverResult<()>{
-//     let webdriver_capabilities = wbd::DesiredCapabilities::chrome();
-//     let driver = wbd::WebDriver::new("http://localhost:4444", &webdriver_capabilities)?;
-
-//     driver.get("https://www.challenger.sg/apple/iphone-m")?;
-
-//     //  Selecting the maximum number of items to be loaded (144)
-//     let item_count_selector = driver.find_element(wbd::By::XPath("/html/body/div[1]/main/div[2]/div/div/div[2]/div/div[3]/div[2]/div/div/div[1]")).unwrap();
-//     item_count_selector.click()?;
-
-//     let item_count_selector = driver.find_element(wbd::By::XPath("/html/body/div[1]/main/div[2]/div/div/div[2]/div/div[3]/div[2]/div/div/div[2]/ul[2]/li[3]")).unwrap();
-//     item_count_selector.click()?;
-
-//     let element_nodes = driver.find_elements(wbd::By::Css("div.item-body"))?;
-
-//     for element_node in element_nodes {
-//         let item_price = element_node.find_element(wbd::By::Css("p.text-red-600")).unwrap();
-//         println!("{}",item_price.text().unwrap());
-//     }
-
-//     // println!("{}",element_nodes.len().to_string());
-
-//     // let source = driver.page_source()?;
-//     // let mut file = std::fs::File::create("HTML_Output.txt").unwrap();
-//     // file.write_all(source.as_bytes());
-
-//     driver.quit()?;
-
-//     Ok(())
-// }
