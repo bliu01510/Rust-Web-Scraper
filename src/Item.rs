@@ -1,8 +1,8 @@
 use self::_InternalMethods::_InternalItemMethods;
 use crate::Price;
 use crate::Shop;
-use std::result;
 use serde::Serialize;
+use std::result;
 use thirtyfour_sync;
 use thirtyfour_sync::Capabilities;
 use thirtyfour_sync::WebDriverCommands;

@@ -1,4 +1,3 @@
-
 #[derive(serde::Serialize, serde::Deserialize)]
 pub enum ItemPrice {
     SGD(f64),
