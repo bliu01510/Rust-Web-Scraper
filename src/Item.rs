@@ -2,6 +2,7 @@ use self::_InternalMethods::_InternalItemMethods;
 use crate::Price;
 use crate::Shop;
 use serde::Serialize;
+use thirtyfour_sync::prelude::ElementWaitable;
 use std::result;
 use thirtyfour_sync;
 use thirtyfour_sync::Capabilities;
@@ -201,28 +202,24 @@ impl ChallengerItem {
         webdriver.get(url_link)?;
 
         // Locating the dropdown box for the sorting arrangement
-        webdriver.find_element(thirtyfour_sync::By::Css("div.ais-SortBy"))?
-        .find_element(thirtyfour_sync::By::XPath("//i[@class='ivu-icon ivu-icon-ios-arrow-down ivu-select-arrow']"))?
-        .click();
-        std::thread::sleep(std::time::Duration::from_millis(100));
+        webdriver.find_element(thirtyfour_sync::By::XPath("//div[@class='ais-SortBy']//i[@class='ivu-icon ivu-icon-ios-arrow-down ivu-select-arrow']"))?
+        .click()?;
+        std::thread::sleep(std::time::Duration::from_millis(500));
 
         // Selecting the "Price Low to High Options"
-        webdriver.find_element(thirtyfour_sync::By::ClassName("ais-SortBy"))?
-        .find_element(thirtyfour_sync::By::ClassName("ivu-select-dropdown-list"))?
-        .find_element(thirtyfour_sync::By::XPath("//li[@class='ivu-select-item' and text()='Price Low to High']"))?
-        .click();
-        std::thread::sleep(std::time::Duration::from_millis(100));
+        webdriver.find_element(thirtyfour_sync::By::XPath("//div[@class='ais-HitsPerPage']//li[@class='ivu-select-item' and normalize-space(text())='Price Low to High']"))?
+        .click()?;
+        std::thread::sleep(std::time::Duration::from_millis(500));
 
         // Locating the dropdown box for the page item count
-        let selected_element = webdriver.find_element(thirtyfour_sync::By::XPath(
-            "/html/body/div[1]/main/div[2]/div/div/div[2]/div/div[3]/div[2]/div/div/div[1]/div/i",
-        ))?;
-        selected_element.click()?;
+        webdriver.find_element(thirtyfour_sync::By::XPath("//div[@class='ais-HitsPerPage']//i[@class='ivu-icon ivu-icon-ios-arrow-down ivu-select-arrow']"))?
+        .click()?;
         std::thread::sleep(std::time::Duration::from_millis(500));
 
         // Selecting the "144 per page"
-        let selected_element = webdriver.find_element(thirtyfour_sync::By::XPath("/html/body/div[1]/main/div[2]/div/div/div[2]/div/div[3]/div[2]/div/div/div[2]/ul[2]/li[3]"))?;
-        selected_element.click()?;
+        webdriver.find_element(thirtyfour_sync::By::XPath("//div[@class='ais-HitsPerPage']//li[@class='ivu-select-item' and normalize-space(text())='144 per page']"))?
+        .click()?;
+        println!("Selected items to be displayed = 144!");
         std::thread::sleep(std::time::Duration::from_millis(500));
 
         // Locating each element node
