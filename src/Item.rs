@@ -201,15 +201,16 @@ impl ChallengerItem {
         webdriver.get(url_link)?;
 
         // Locating the dropdown box for the sorting arrangement
-        let selected_element = webdriver.find_element(thirtyfour_sync::By::XPath(
-            "/html/body/div[1]/main/div[2]/div/div/div[2]/div/div[3]/div[1]/div/div/div[1]/div/i",
-        ))?;
-        selected_element.click()?;
+        webdriver.find_element(thirtyfour_sync::By::Css("div.ais-SortBy"))?
+        .find_element(thirtyfour_sync::By::XPath("//i[@class='ivu-icon ivu-icon-ios-arrow-down ivu-select-arrow']"))?
+        .click();
         std::thread::sleep(std::time::Duration::from_millis(100));
 
         // Selecting the "Price Low to High Options"
-        let selected_element = webdriver.find_element(thirtyfour_sync::By::XPath("/html/body/div[1]/main/div[2]/div/div/div[2]/div/div[3]/div[1]/div/div/div[2]/ul[2]/li[2]"))?;
-        selected_element.click()?;
+        webdriver.find_element(thirtyfour_sync::By::ClassName("ais-SortBy"))?
+        .find_element(thirtyfour_sync::By::ClassName("ivu-select-dropdown-list"))?
+        .find_element(thirtyfour_sync::By::XPath("//li[@class='ivu-select-item' and text()='Price Low to High']"))?
+        .click();
         std::thread::sleep(std::time::Duration::from_millis(100));
 
         // Locating the dropdown box for the page item count
